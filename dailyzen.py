@@ -14,16 +14,26 @@ def quote(r):
 	f.write(str(r.text))
 	f.close()
 	f = open('site.html','r')
-	soup = BeautifulSoup(f)
-	wisdom = soup.p
-	author = soup.find_all('a', class_='artist')
+	soup = BeautifulSoup(f.read())
+	wisdom = soup.p.get_text()
 	f.close()
-	return wisdom, author
+	print '\n' + wisdom
+	return
+
+# I should be able to strip_tags the comment 'Add Author for Quote'
+
+#an alternative quote(r)
+
+#	with open('site.html', 'rb') as html:
+#		soup = BeautifulSoup(html.read())
+
+#	for td in soup.find_all('td'):
+#		print td.get_text()
 
 def main():
 	r = requests.get('http://www.dailyzen.com/')
 	if checksite(r):
-		print quote(r)
+		quote(r)
 	else:
 		print 'Website error: ' + r.status_code
 		response = raw_input('Retry? (y/n): ')
