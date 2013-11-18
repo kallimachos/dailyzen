@@ -1,8 +1,8 @@
 #This app grabs the text from dailyzen and prints it to the command line.
-#It uses the beautifulsoup and requests modules to achieve this.
+#It uses the beautifulsoup and requests libraries to achieve this.
 
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, Comment
 from sys import exit
 
 def checksite(r):
@@ -15,20 +15,24 @@ def quote(r):
 	f.close()
 	f = open('site.html','r')
 	soup = BeautifulSoup(f.read())
-	wisdom = soup.p.get_text()
+	comments = soup.findAll(text=lambda text:isinstance(text, Comment))
+	[comment.extract() for comment in comments]
+	soup = soup.p
+	wisdom = '\n'
+	for string in soup.stripped_strings:
+		if string[0] == '-': wisdom += '\n'
+		wisdom += string + '\n'
 	f.close()
-	print '\n' + wisdom
+	print wisdom
 	return
 
-# I should be able to strip_tags the comment 'Add Author for Quote'
-
-#an alternative quote(r)
+# An alternative way to read a file
 
 #	with open('site.html', 'rb') as html:
 #		soup = BeautifulSoup(html.read())
 
-#	for td in soup.find_all('td'):
-#		print td.get_text()
+#	for p in soup.find_all('p'):
+#		print p.get_text()
 
 def main():
 	r = requests.get('http://www.dailyzen.com/')
