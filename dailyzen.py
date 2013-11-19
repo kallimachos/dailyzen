@@ -10,29 +10,16 @@ def checksite(r):
 	else: return False
 
 def quote(r):
-	f = open('site.html','w+')
-	f.write(str(r.text))
-	f.close()
-	f = open('site.html','r')
-	soup = BeautifulSoup(f.read())
+	soup = BeautifulSoup(r.text, from_encoding='utf-8')
 	comments = soup.findAll(text=lambda text:isinstance(text, Comment))
 	[comment.extract() for comment in comments]
 	soup = soup.p
-	wisdom = '\n'
+	print ''
 	for string in soup.stripped_strings:
-		if string[0] == '-': wisdom += '\n'
-		wisdom += string + '\n'
-	f.close()
-	print wisdom
+		string = string.replace(u'\x96','-')
+#		if string[0] == '-': print '\n'
+		print string + '\n'
 	return
-
-# An alternative way to read a file
-
-#	with open('site.html', 'rb') as html:
-#		soup = BeautifulSoup(html.read())
-
-#	for p in soup.find_all('p'):
-#		print p.get_text()
 
 def main():
 	r = requests.get('http://www.dailyzen.com/')
