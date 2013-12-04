@@ -13,6 +13,7 @@ def quote(r):
 	print ''
 	for string in soup.stripped_strings:
 		string = string.replace(u'\x96','-')
+		string = string.replace(u'\x97','-')
 		if string[0] == '-': print '\n' + string + '\n'
 		else: print string
 	return
