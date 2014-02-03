@@ -10,12 +10,12 @@ def quote(r):
 	comments = soup.findAll(text=lambda text:isinstance(text, Comment))
 	[comment.extract() for comment in comments]
 	soup = soup.p
-	print ''
+	print('')
 	for string in soup.stripped_strings:
 		string = string.replace(u'\x96','-')
 		string = string.replace(u'\x97','-')
-		if string[0] == '-': print '\n' + string + '\n'
-		else: print string
+		if string[0] == '-': print('\n' + string + '\n')
+		else: print(string)
 	return
 
 def main():
