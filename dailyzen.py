@@ -2,23 +2,14 @@
 # It uses the beautifulsoup and requests libraries to achieve this.
 
 import requests
-from bs4 import BeautifulSoup, Comment
+from bs4 import BeautifulSoup
 from sys import exit
 
 
 def quote(r):
-    soup = BeautifulSoup(r.text, from_encoding='utf-8')
-    comments = soup.findAll(text=lambda text: isinstance(text, Comment))
-    [comment.extract() for comment in comments]
-    soup = soup.p
-    print('')
-    for string in soup.stripped_strings:
-        string = string.replace(u'\x96', '-')
-        string = string.replace(u'\x97', '-')
-        if string[0] == '-':
-            print('\n' + string + '\n')
-        else:
-            print(string)
+    soup = BeautifulSoup(r.text, "lxml", from_encoding='utf-8')
+    print("\n" + soup.blockquote.get_text().strip())
+    print("\n" + soup.cite.get_text().strip() + "\n")
     return
 
 
