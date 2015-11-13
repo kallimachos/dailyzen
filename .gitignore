@@ -1,1 +1,5 @@
-site.html
+*.pyc
+.cache/
+.tox/
+__pycache__/
+MANIFEST
