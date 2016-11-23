@@ -1,3 +1,4 @@
+#!/bin/python3
 # This app grabs the text from dailyzen and prints it to the command line.
 
 import requests
@@ -9,7 +10,7 @@ URL = 'http://www.dailyzen.com/'
 def main(url):
     try:
         r = requests.get(url)
-        soup = BeautifulSoup(r.text, 'html.parser', from_encoding='utf-8')
+        soup = BeautifulSoup(r.text, 'html.parser')
         print('\n' + soup.blockquote.get_text().strip())
         print('\n' + soup.cite.get_text().strip() + '\n')
         return(0)
