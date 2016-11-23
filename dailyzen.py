@@ -18,5 +18,6 @@ def main(url):
         print('An error occured:\n' + str(e))
         return(1)
 
+
 if __name__ == '__main__':
     main(URL)
